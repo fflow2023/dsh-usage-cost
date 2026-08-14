@@ -202,7 +202,7 @@ window.__ModuleLoader__.load({
       inject: ['slots'],
       apply(ctx) {
         ctx.slots.inject('conversation.composer.dock', () => ctx.slots.register(
-          { name: 'conversation.composer.dock', id: 'stats', order: 0, locale: 'conversation' },
+          { name: 'conversation.composer.dock', id: 'stats', priority: -1, order: 0, locale: 'conversation' },
           StatsWithCost,
         ))
         ctx.slots.inject('settings.section', () => ctx.slots.register(
