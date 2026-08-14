@@ -19,9 +19,9 @@
 
 ```yaml
 # host 组合（提供 usageCost 投影）
-- name: dsh-usage-cost
+- name: @fflow2023/dsh-usage-cost
 # web 组合（提供底部费用行 + 设置页入口）
-- name: dsh-usage-cost/client
+- name: @fflow2023/dsh-usage-cost/client
 ```
 
 或使用 `dsh add` 安装后重建 web 包。client 半部分需要打进 web bundle，改完后需重新构建前端产物。
