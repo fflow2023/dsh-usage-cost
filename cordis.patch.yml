@@ -1,0 +1,6 @@
+# dsh-usage-cost bundle layer: one row mounts the host projection AND the
+# browser half (bottom cost line + 费用统计 settings page). The modules
+# node half picks the `dsh.client` manifest up from this Loader entry.
+- insert:
+    - id: usage-cost
+      name: '@fflow2023/dsh-usage-cost'

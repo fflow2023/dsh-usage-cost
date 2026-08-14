@@ -15,16 +15,17 @@
 
 ## 安装
 
-在 `cordis.yml` 的 host 组合与 web 组合里各挂一行（包名以你的实际 scope 为准）：
+标准的 dsh bundle 插件，**一条命令永久安装**（无需手改任何 `cordis.yml`）：
 
-```yaml
-# host 组合（提供 usageCost 投影）
-- name: @fflow2023/dsh-usage-cost
-# web 组合（提供底部费用行 + 设置页入口）
-- name: @fflow2023/dsh-usage-cost/client
+```sh
+# 从 GitHub 安装（需要为构建授权一次，见下）
+dsh plugin --profile web add github:fflow2023/dsh-usage-cost
+
+# 或发布到 npm 后：
+dsh plugin --profile web add @fflow2023/dsh-usage-cost
 ```
 
-或使用 `dsh add` 安装后重建 web 包。client 半部分需要打进 web bundle，改完后需重新构建前端产物。
+源码 checkout 环境把命令换成 `pnpm dsh plugin --profile web add ...`。第一次从 git 安装时，pnpm 会提示把生成的 `allowBuilds` 键复制进该 profile 的 `pnpm-workspace.yaml`，然后重跑一次即可。之后 `dsh` 会把本包追加进 `dsh.profile.bundles`，host 投影与浏览器半部分（底部费用行 + 设置页）同时生效，重启永久保留。
 
 ## 计费规则
 
@@ -44,13 +45,13 @@
 
 ### 涨价后如何更新
 
-所有价格集中在 [`src/pricing.ts`](src/pricing.ts) 的 `PRICES` 一处。价格变动时只改这一个文件、bump 版本号即可，无需改其它代码。
+所有价格集中在 [`index.js`](index.js) 的 `PRICES` 一处。价格变动时只改这一个文件、bump 版本号即可，无需改其它代码。
 
 ## 轻量设计
 
+- **纯 JS、零构建、零运行时依赖**：没有 TypeScript 构建步骤、没有 `prepare` 构建脚本，clone 即用。
 - Host：1 个 projection 单元，每个事件 O(1)，无额外订阅/定时器/RPC/持久化。
 - Client：2 个 slot 注册，无 store、无副作用、无本地状态。
-- 依赖仅 `zod`（schema 校验）+ 必要的 `@deepseek-ai/dsh-*` peer。
 
 ## Model Experience
 
